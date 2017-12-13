@@ -34,7 +34,7 @@ permalink: /add-zeromq-socket-to-libevent-eventloop
 * 通过`zmq_getsockopt`的`ZMQ_EVENTS`选项获取flag，检测其是否有`ZMQ_POLLIN`标记；
 
 不管哪种方式，`ZeroMQ`都是以边缘触发（edge trigger）的方式来触发事件。
-此外，由于`ZeroMQ`提供的是”基于消息“的语意，因此，对于TCP这样的stream协议来说，即便某个zmq socket的底层OS socket在某个时刻的状态是`ready for read`，这也只是以为着这个fd上有数据可读，但是这些数据未必已经构成了一个业务上的消息（即发送端是以“业务消息”为维度来发送端）。因此，必须继续通过`zmq_getsockopt`的`ZMQ_EVENTS`选项获取flag，检测其是否有`ZMQ_POLLIN`标记。如果有该标记，才表明至少已经有一个业务消息可供读取。
+此外，由于`ZeroMQ`提供的是“基于消息”的语意，因此，对于TCP这样的stream协议来说，即便某个zmq socket的底层操作系统的socket在某个时刻的状态是`ready for read`，这也只是意味着这个fd上有数据可读，但是这些数据未必已经构成了一个业务上的消息（即发送端是以“业务消息”为维度来发送的）。因此，必须继续通过`zmq_getsockopt`的`ZMQ_EVENTS`选项获取flag，检测其是否有`ZMQ_POLLIN`标记。如果有该标记，才表明至少已经有一个业务消息可供读取。
 
 同时，由于是边缘触发，我们在读取业务消息的时候，一定要一直读取，直到遇到了`EAGAIN`（`EWOULDBLOCK`)才能结束，否则即便该fd上有更新的数据到达，该fd也不会再触发可读事件。
 
