@@ -19,10 +19,10 @@ title: In Code We Trust
 email: pthreadself@gmail.com
 
 description: >- # this means to ignore newlines until "baseurl:"
-  "Linux下C++高性能服务器端网络编程"
+  "Linux/C/C++/高性能服务器端网络编程/多线程"
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://wangke.io" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: jekyllrb
+#twitter_username: jekyllrb
 github_username: pthreadself
 comments: true
 
